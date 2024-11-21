@@ -51,6 +51,20 @@ export default defineConfig(({ command, mode }): UserConfig => {
         // Don't cache the server response in dev mode
         "Cache-Control": "public, max-age=0",
       },
+      proxy: {
+        // Proxy for `/mobify/proxy/api/:path*`
+        '/mobify/proxy/api': {
+          target: 'https://kv7kzm78.api.commercecloud.salesforce.com',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/mobify\/proxy\/api/, ''),
+        },
+        // Proxy for `/mobify/proxy/ocapi/:path*`
+        '/mobify/proxy/ocapi': {
+          target: 'https://zzuz-008.dx.commercecloud.salesforce.com',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/mobify\/proxy\/ocapi/, ''),
+        },
+      },
     },
     preview: {
       headers: {
